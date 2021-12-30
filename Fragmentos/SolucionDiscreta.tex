@@ -1,0 +1,65 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,spanish]{babel}
+\usepackage{mathtools}
+
+\begin{document}
+
+\section{Solución discreta}
+
+El problema de variaciones (TODO añadir referencia) asociado a la 
+ecuación de Poisson con condiciones de frontera de Dirichlet puede ser discretizado como sigue: 
+
+Sin pérdida de generalidad ahora $S$ y $\Omega$ comienzan a ser conjuntos finitos de puntos definidos
+sobre la rejilla discreta. 
+
+Para cada pixel $p$ de $S$, se define $N_p$ el conjunto de a lo sumo cuatro puntos contiguos
+vertical y horizontalmente a $p$ en $S$. 
+Sea  $\langle p,q\rangle$ el par de puntos cumpliendo que $q$ pertenece a $N_p$.   
+
+Se define el borde de $\Omega$ como 
+
+\begin{equation*}
+    \partial\Omega = \{ p \in S \setminus \Omega : N_p \cap \Omega \neq  \emptyset \}
+\end{equation*}
+
+Denotaremos como $f_p$ al valor de $f$ en $p$. El objetivo a resolver de nuestro problema es 
+calcular el conjunto de intensidades $f_{|_{\Omega}} = \{ f_p, p \in \Omega\}$
+
+Para las condiciones de borde de Dirichlet en el borde de forma arbitraria es mejor (TODO ¿por qué?)
+discretizar el problema de variaciones antes que la ecuación de Poisson (TODO: añadir referencias a las ecuaciones). 
+
+Para la fórmula discretizada del problema de variación (TODO referencia) resulta: 
+
+\begin{equation}\label{eq:discretizada}
+    \min: { f|\Omega} = \sum_{ \langle p,q\rangle \cap \Omega = \emptyset} (f_p - f_q - v_{pq})^2 \text{ con } f_p = f^*_p \text{ para todo } p \in \partial \Omega
+\end{equation}
+
+donde $v_{pq}$ es la proyección de $v(\frac{p+q}{2})$ orientada en el segmento 
+$\left[ p,q \right]$, 
+esto es $v_{pq} = v(\frac{p+q}{2})\cdot  \overrightarrow{pq}$. 
+
+Este problema \ref{eq:discretizada} pertenece a un problema de optimización cuadrática. 
+Una solución de \ref{eq:discretizada} satisface además que 
+
+(TODO: fórmula explicar de dónde viene la fórmula ). 
+
+\begin{equation}\label{eq:ecuacionLinealDiscretizada}
+    \text{Para todo } p \in \Omega, |N_p| f_p - \sum_{q \in N_p \cap \Omega} f_p = \sum_{q \in N_p \cap \partial \Omega} f^*_p + \sum_{q \in N_p } v_{pq}.
+\end{equation}
+
+La ecuación  \ref{eq:ecuacionLinealDiscretizada} forma un sistema clásico 
+%(TODO: Las propiedad habría que traducirlas bien, son las siguientes Equations (7) form a classical, sparse (banded), symmetric, positive-definite system. Because of the arbitrary shape of bound- ary ∂ Ω, we must use well-known iterative solvers.)
+
+
+
+Nota: 
+
+El método para resolver el sistema que propone es el de Gauss Seidel. 
+http://blog.espol.edu.ec/analisisnumerico/3-6-1-gauss-seidel-ejemplo01/
+
+Podríamos usar alguno de numpy que seguro que va más rápido que el que planteemos nosotros. 
+
+\end{document}
