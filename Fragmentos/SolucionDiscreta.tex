@@ -50,8 +50,8 @@ Una solución de \ref{eq:discretizada} satisface además que
     \text{Para todo } p \in \Omega, |N_p| f_p - \sum_{q \in N_p \cap \Omega} f_p = \sum_{q \in N_p \cap \partial \Omega} f^*_p + \sum_{q \in N_p } v_{pq}.
 \end{equation}
 
-La ecuación  \ref{eq:ecuacionLinealDiscretizada} forma un sistema clásico 
-%(TODO: Las propiedad habría que traducirlas bien, son las siguientes Equations (7) form a classical, sparse (banded), symmetric, positive-definite system. Because of the arbitrary shape of bound- ary ∂ Ω, we must use well-known iterative solvers.)
+La ecuación  \ref{eq:ecuacionLinealDiscretizada} forma un sistema clásico, que en forma matricial tiene forma de matriz banda (valores no nulos en diagonal principal). 
+Es demás una matriz simétrica definida positiva. 
 
 
 
@@ -61,5 +61,8 @@ El método para resolver el sistema que propone es el de Gauss Seidel.
 http://blog.espol.edu.ec/analisisnumerico/3-6-1-gauss-seidel-ejemplo01/
 
 Podríamos usar alguno de numpy que seguro que va más rápido que el que planteemos nosotros. 
+Como por ejemplo: 
+
+https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html
 
 \end{document}
