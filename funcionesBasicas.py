@@ -368,9 +368,14 @@ def MultipleChannelDiscretePoissonSolverTransformed( multiChannelSource, multiCh
     '''
     # Copiado de la imagen para no transformar la imagen original
     seamlessImg = np.copy(multiChannelTargetImg)
-    x_len, y_len, _ = multiChannelSource.shape 
-    allCoordinates = set( (i,j) for i in range(x_len) for j in range(y_len))
-    newMultiChannelSource = DirectedCloning( multiChannelSource, multiChannelTargetImg, allCoordinates , transformation)
+
+    # Se forma una imagen intermedia copiando sólo los píxeles necesarios: la región y el borde
+    # de la imagen fuente en la imagen destino
+    boundary = SourceBoundary(multiChannelSource[:,:,0], selectedSet)
+    regionToCopy = selectedSet.union(boundary)
+    newMultiChannelSource = DirectedCloning( multiChannelSource, multiChannelTargetImg, regionToCopy , transformation)
+
+    # Calcular región de puntos después de transformación
     newSelectedSet = set( 
         map(
             lambda t : Transform(t, transformation),
@@ -389,3 +394,34 @@ def MultipleChannelDiscretePoissonSolverTransformed( multiChannelSource, multiCh
             seamlessImg[p[0], p[1],i] = f[index]
     
     return seamlessImg
+
+
+def GuidanceFieldMixingGradients(inputChannel : np.ndarray, targetChannel: np.ndarray):
+    ''' Devuelve la función v_{p,q} = f^*_p - f^*_q si |f^*_p - f^*_q| > |g_p - g_q|
+    g_p - g_q en el caso contrario
+    f_ = f^* Para el caso borde. 
+    Para el caso particular en que g es inputChannel
+    '''
+    x_len, y_len = inputChannel.shape 
+
+    def V (p,q):
+        # Calculamos g_p (nunca en el borde, luego)
+        g_p = inputChannel[p[0]][p[1]]
+        if q[0] < x_len and q[1] < y_len:
+            g_q = inputChannel[q[0]][q[1]]
+        else:
+            g_q = targetChannel[q[0]][q[1]]
+        
+        # Se computa g_p - g_q
+        gDifference = g_p - g_q
+        
+        # Se computa f^*_p - f^*_q
+        pDifference = targetChannel[p[0], p[1]] - targetChannel[q[0], q[1]]
+
+        # Según el valor absoluto se devuelve un valor u otro
+        if (np.abs(pDifference) > np.abs(gDifference)):
+            return pDifference
+        else:
+            return gDifference
+            
+    return V
