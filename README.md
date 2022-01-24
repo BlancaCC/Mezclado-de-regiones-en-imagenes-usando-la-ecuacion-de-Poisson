@@ -1,19 +1,13 @@
 # Implementación de técnicas de mezclar regiones en imágenes usando la ecuación de Poisson  
 
-Este proyecto ha sido realizado como trabajo final de la asignatura de Visión por computador durante diciembre de 2021 y enero de 2022 por Exequiel Alberto Castro Rivero y Blanca Cano Camarero.   
+Este proyecto ha sido realizado como trabajo final de la asignatura de Visión por computador durante diciembre de 2021 y enero de 2022 por Exequiel Alberto Castro Rivero y una servidora.    
 
-Puede encontrar las fuentes en: 
+En el se explican y realizan técnicas de mezclado de imágenes como podrían ser: 
+- Inserción de imágenes.
+- Borrado de regiones.
+- Creación de mosaicos.
+- Transferencia de características.
+- Cambios de color.
+  
 
-- Overleaf: https://www.overleaf.com/5242869551grqpbxfxzqxp
-
-## Comando para descargar todas las imágenes del fichero .ipynb  
-
-`junix ./PoissonImageEditing.ipynb -o imagesFromNotebook`
-
-
-Para usarlo hay que:
-
-instalar junix: pip install junix
-Ejecutar: junix /path/to/my/notebook.ipynb /path/to/folder
-Que en mi caso ha sido junix ./PoissonImageEditing.ipynb -o imagesFromNotebook
-Puedes encontrar el proyecto en : https://github.com/damienmarlier51/JupyterNotebookImageExporter
+En el realease además del código fuente puede encontrar el pdf de la memoria compilada :D
